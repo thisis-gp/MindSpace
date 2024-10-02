@@ -39,7 +39,7 @@ const Hero = () => {
             To live your life to the fullest, we're continuing to find ways to
             prevent mental health problems.
           </p>
-          <Button href="/pricing">Get started</Button>
+          <Button href="/login">Get started</Button>
         </div>
         <div className="relative max-w-[23rem] mx-auto md:max-w-5xl xl:mb-24">
           <div className="relative z-1 p-0.5 rounded-2xl bg-conic-gradient">

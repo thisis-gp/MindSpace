@@ -52,12 +52,12 @@ const Roadmap = () => (
                     <img
                       className="w-full"
                       src={item.imageUrl}
-                      width={628}
+                      width={900}
                       height={426}
                       alt={item.title}
                     />
                   </div>
-                  <h4 className="h4 mb-4">{item.title}</h4>
+                  <h4 className="h4 mb-4 text-color-5">{item.title}</h4>
                   <p className="body-2 text-white">{item.text}</p>
                 </div>
               </div>

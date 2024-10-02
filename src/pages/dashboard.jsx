@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import Card from "../components/Card";
+import Navbar from "../components/Navbar"; // Import the Navbar component
 import {
   Mic,
   Send,
@@ -12,6 +13,8 @@ import {
   Clock,
   Settings,
 } from "lucide-react";
+import { database } from "../firebase"; // Import your Firebase database instance
+import { ref, get } from "firebase/database"; // Import ref and get functions
 
 const suggestedPrompts = [
   "How can I manage stress?",
@@ -24,20 +27,46 @@ const Dashboard = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isListening, setIsListening] = useState(false);
+  const [hasSubmittedPrompt, setHasSubmittedPrompt] = useState(false); // Track if user has submitted a prompt
+  const [userData, setUserData] = useState(null); // State to hold user data
   const messagesEndRef = useRef(null);
+  const userId = localStorage.getItem("userId"); // Get user ID from local storage
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
+  useEffect(() => {
+    if (userId) {
+      fetchUserData(userId); // Call fetchUserData here
+    }
+  }, [userId]);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const fetchUserData = async (userId) => {
+    // Define fetchUserData before calling it
+    try {
+      const userRef = ref(database, `users/${userId}`); // Reference to the user's data
+      const snapshot = await get(userRef); // Get the user's data
+
+      if (snapshot.exists()) {
+        setUserData(snapshot.val()); // Set user data to state
+      } else {
+        console.log("No data available for this user.");
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
   };
 
   const handleSend = async () => {
     if (input.trim()) {
       setMessages([...messages, { text: input, sender: "user" }]);
       setInput("");
+      setHasSubmittedPrompt(true); // Set this to true when user submits a prompt
       // Simulating AI response
       const response = await getAIResponse(input);
       setMessages((msgs) => [...msgs, { text: response, sender: "ai" }]);
@@ -77,27 +106,34 @@ const Dashboard = () => {
         </div>
       </aside>
       <div className="flex-1 flex flex-col overflow-hidden">
-        <header className="bg-white shadow-sm z-10 p-4">
-          <h1 className="text-2xl font-semibold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-            Hello, User
-          </h1>
-          <p className="text-gray-500 text-lg">How can I help you today?</p>
-        </header>
+        <Navbar /> {/* Include the Navbar component */}
+        {!hasSubmittedPrompt && ( // Conditionally render the header
+          <header className="bg-white shadow-sm z-10 p-4">
+            <h1 className="text-2xl font-semibold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+              Hello, {userData ? userData.name : "User"}
+            </h1>
+            <p className="text-gray-500 text-lg">How can I help you today?</p>
+          </header>
+        )}
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-white">
           <div className="max-w-3xl mx-auto px-4 py-8">
-            {messages.length === 0 && (
-              <div className="grid grid-cols-2 gap-4 mb-8">
-                {suggestedPrompts.map((prompt, index) => (
-                  <Card
-                    key={index}
-                    className="p-4 hover:bg-gray-50 cursor-pointer transition-colors duration-200"
-                    onClick={() => setInput(prompt)}
-                  >
-                    <p className="text-sm text-gray-700">{prompt}</p>
-                  </Card>
-                ))}
-              </div>
-            )}
+            {!hasSubmittedPrompt &&
+              messages.length === 0 && ( // Show prompts only if no prompt has been submitted
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                  {suggestedPrompts.map((prompt, index) => (
+                    <Card
+                      key={index}
+                      className="p-4 hover:bg-gray-50 cursor-pointer transition-colors duration-200"
+                      onClick={() => {
+                        setInput(prompt);
+                        handleSend(); // Call handleSend to submit the prompt
+                      }}
+                    >
+                      <p className="text-sm text-gray-700">{prompt}</p>
+                    </Card>
+                  ))}
+                </div>
+              )}
             <div className="space-y-4">
               {messages.map((message, index) => (
                 <div
