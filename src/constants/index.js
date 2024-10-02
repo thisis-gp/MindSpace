@@ -1,0 +1,236 @@
+import {
+  benefitIcon1,
+  benefitIcon2,
+  benefitIcon3,
+  benefitIcon4,
+  benefitImage2,
+  chromecast,
+  disc02,
+  discordBlack,
+  facebook,
+  file02,
+  homeSmile,
+  instagram,
+  notification2,
+  notification3,
+  notification4,
+  plusSquare,
+  recording01,
+  recording03,
+  roadmap1,
+  roadmap2,
+  roadmap3,
+  roadmap4,
+  searchMd,
+  sliders04,
+  telegram,
+  twitter,
+  yourlogo,
+} from "../assets";
+
+export const navigation = [
+  {
+    id: "0",
+    title: "Features",
+    url: "#features",
+  },
+  {
+    id: "1",
+    title: "Pricing",
+    url: "#pricing",
+  },
+  {
+    id: "2",
+    title: "How to use",
+    url: "#how-to-use",
+  },
+  {
+    id: "3",
+    title: "Roadmap",
+    url: "#roadmap",
+  },
+  {
+    id: "4",
+    title: "New account",
+    url: "#signup",
+    onlyMobile: true,
+  },
+  {
+    id: "5",
+    title: "Sign in",
+    url: "#login",
+    onlyMobile: true,
+  },
+];
+
+export const heroIcons = [homeSmile, file02, searchMd, plusSquare];
+
+export const notificationImages = [notification4, notification3, notification2];
+
+export const companyLogos = [yourlogo, yourlogo, yourlogo, yourlogo, yourlogo];
+
+export const brainwaveServices = [
+  "Photo generating",
+  "Photo enhance",
+  "Seamless Integration",
+];
+
+export const brainwaveServicesIcons = [
+  recording03,
+  recording01,
+  disc02,
+  chromecast,
+  sliders04,
+];
+
+export const roadmap = [
+  {
+    id: "0",
+    title: "AI-Powered Chat",
+    text: "Enabling students to communicate with AI for emotional and mental health support in a conversational manner.",
+    date: "May 2023",
+    status: "done",
+    imageUrl: roadmap1,
+    colorful: true,
+  },
+  {
+    id: "1",
+    title: "Mood Tracking",
+    text: "Introducing mood tracking functionality to allow users to track their emotional states over time.",
+    date: "June 2023",
+    status: "progress",
+    imageUrl: roadmap2,
+  },
+  {
+    id: "2",
+    title: "Personalized Guidance",
+    text: "Providing students with personalized mental health guidance based on their interactions and mood.",
+    date: "August 2023",
+    status: "done",
+    imageUrl: roadmap3,
+  },
+  {
+    id: "3",
+    title: "Resource Integration",
+    text: "Integrating with external mental health resources, offering links to professional help and additional reading.",
+    date: "November 2023",
+    status: "progress",
+    imageUrl: roadmap4,
+  },
+];
+
+export const collabText =
+  "MindSpace is dedicated to providing seamless, AI-driven support to help students navigate their mental health journey.";
+
+export const collabContent = [
+  {
+    id: "0",
+    title: "AI Emotional Support",
+    text: collabText,
+  },
+  {
+    id: "1",
+    title: "Personalized Insights",
+  },
+  {
+    id: "2",
+    title: "Seamless Integration with Resources",
+  },
+];
+
+export const pricing = [
+  {
+    id: "0",
+    title: "Student",
+    description: "Basic AI support, emotional health tracking",
+    price: "0",
+    features: [
+      "AI-powered emotional support",
+      "Mood tracking and journaling",
+      "Access to basic mental health resources",
+    ],
+  },
+  {
+    id: "1",
+    title: "Premium",
+    description: "Advanced support, personalized guidance",
+    price: "9.99",
+    features: [
+      "Personalized emotional health insights",
+      "Access to premium resources",
+      "Priority support from mental health experts",
+    ],
+  },
+  {
+    id: "2",
+    title: "Institutional",
+    description: "Custom AI integration, advanced analytics",
+    price: null,
+    features: [
+      "Custom AI chatbot for institutions",
+      "Advanced emotional health analytics for staff",
+      "Tailored mental health resources",
+    ],
+  },
+];
+
+export const benefits = [
+  {
+    id: "1",
+    title: "24/7 Support",
+    text: "Receive round-the-clock support for your emotional health needs.",
+    backgroundUrl: "./src/assets/benefits/card-4.svg",
+    iconUrl: benefitIcon4,
+    imageUrl: benefitImage2,
+    light: true,
+  },
+  {
+    id: "2",
+    title: "Track Your Emotions",
+    text: "Track your emotions over time and gain insights into your mental health.",
+    backgroundUrl: "./src/assets/benefits/card-5.svg",
+    iconUrl: benefitIcon1,
+    imageUrl: benefitImage2,
+  },
+  {
+    id: "3",
+    title: "Accessible Anywhere",
+    text: "Access your AI-powered emotional support anytime, anywhere.",
+    backgroundUrl: "./src/assets/benefits/card-6.svg",
+    iconUrl: benefitIcon2,
+    imageUrl: benefitImage2,
+  },
+];
+
+export const socials = [
+  {
+    id: "0",
+    title: "Discord",
+    iconUrl: discordBlack,
+    url: "#",
+  },
+  {
+    id: "1",
+    title: "Twitter",
+    iconUrl: twitter,
+    url: "#",
+  },
+  {
+    id: "2",
+    title: "Instagram",
+    iconUrl: instagram,
+    url: "#",
+  },
+  {
+    id: "3",
+    title: "Telegram",
+    iconUrl: telegram,
+    url: "#",
+  },
+  {
+    id: "4",
+    title: "Facebook",
+    iconUrl: facebook,
+    url: "#",
+  },
+];
