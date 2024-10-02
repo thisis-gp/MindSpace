@@ -22,7 +22,7 @@ import loading from "./loading.png";
 import background from "./background.jpg";
 
 import curve from "./hero/curve.png";
-import robot from "./hero/robot.jpg";
+import robot from "./hero/robot.png";
 import Designer from "./hero/Designer.jpg";
 
 import service1 from "./services/service-1.png";
@@ -63,6 +63,7 @@ import facebook from "./socials/facebook.svg";
 import instagram from "./socials/instagram.svg";
 import telegram from "./socials/telegram.svg";
 import twitter from "./socials/twitter.svg";
+import google from "./socials/Google_logo.svg";
 
 export {
   brainwave,
@@ -123,4 +124,5 @@ export {
   instagram,
   telegram,
   twitter,
+  google,
 };

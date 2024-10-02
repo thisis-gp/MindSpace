@@ -10,11 +10,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-oauth/google": "^0.12.1",
+    "axios": "^1.7.7",
+    "clsx": "^2.1.1",
+    "firebase": "^10.14.0",
+    "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.447.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-just-parallax": "^3.1.16",
-    "react-router-dom": "^6.22.1",
-    "scroll-lock": "^2.1.5"
+    "react-router-dom": "^6.26.2",
+    "scroll-lock": "^2.1.5",
+    "tailwind-merge": "^2.5.2",
+    "universal-cookie": "^7.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.55",
