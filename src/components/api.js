@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = process.env.REACT_APP_FASTAPI_LINK; // Ensure this matches your FastAPI server URL
+const API_BASE_URL = import.meta.env.VITE_FASTAPI_LINK; // Ensure this matches your FastAPI server URL
 
 // Function to send chat input to the FastAPI backend
 export const sendChatMessage = async (userId, message) => {
