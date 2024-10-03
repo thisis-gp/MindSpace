@@ -21,7 +21,7 @@ const LoginPage = () => {
       fetchUserProfile(codeResponse.access_token);
     },
     onError: (error) => {
-      console.log("Login Failed:", error);
+      console.log("Login Failed:");
       setError("Login failed. Please try again.");
     },
   });
@@ -54,7 +54,6 @@ const LoginPage = () => {
 
       navigate("/dashboard");
     } catch (err) {
-      console.error(err);
       setError("Error fetching user profile. Please try again.");
     } finally {
       setLoading(false);
@@ -72,7 +71,7 @@ const LoginPage = () => {
       });
       console.log("User data saved to Realtime Database");
     } catch (err) {
-      console.error("Error saving data to Realtime Database:", err);
+      console.error("Error saving data to Realtime Database:");
       setError("Error saving user data. Please try again.");
     }
   };
