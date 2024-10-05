@@ -58,7 +58,7 @@ export const navigation = [
   {
     id: "5",
     title: "Sign in",
-    url: "#login",
+    url: "/login",
     onlyMobile: true,
   },
 ];
@@ -234,3 +234,41 @@ export const socials = [
     url: "#",
   },
 ];
+
+export const termsContent = `
+  # Terms and Conditions
+
+  Welcome to MindSpace, an open-source project that provides mental health and emotional support. By using this service, you agree to comply with the following terms and conditions. If you do not agree with these terms, please do not use this service.
+
+  1. **Use of Services**: MindSpace is provided "as is" for personal, non-commercial use. The content, tools, and features are provided for informational and support purposes only and do not constitute professional mental health advice. You are responsible for your use of the service and agree not to misuse the service in any way.
+  2. **User Accounts**: By signing in, you agree to provide accurate and up-to-date information. You are responsible for maintaining the security of your account and for all activities under your account.
+  3. **Privacy**: We value your privacy. We collect user data to provide emotional and mental health support. Please see our Privacy Policy for more details.
+  4. **Intellectual Property**: MindSpace is an open-source project licensed under GPL v3. Contributions to the project are welcome, and contributors agree that their submissions are made under this license.
+  5. **Disclaimer**: MindSpace is an open-source project and provided without warranties of any kind, either express or implied. We do not guarantee that the service will be error-free or uninterrupted.
+  6. **Termination**: We reserve the right to suspend or terminate your access to MindSpace if you violate these terms.
+  7. **Changes to the Terms**: We reserve the right to update these terms at any time. Your continued use of the service after any changes indicates your acceptance of the new terms.
+
+  For more details, please contact am400718@gmail.com.
+`;
+
+export const privacyContent = `
+  ## Privacy Policy
+
+  MindSpace takes your privacy seriously. This Privacy Policy outlines what personal information we collect, how we use it, and how we protect it.
+
+  ### Information We Collect
+  1. **Personal Data**: We collect personal data such as your name, email, and Google account information when you sign in.
+  2. **Usage Data**: We collect data on your usage of the MindSpace platform, such as interactions with our AI services and mood tracking information.
+  
+  ### How We Use Your Data
+  - **Personalization**: We use your data to personalize the AI responses and to improve your emotional support experience.
+  - **Analytics**: We analyze usage data to improve our services and ensure their effectiveness in providing mental health support.
+  
+  ### Data Security
+  We take reasonable steps to protect your data from unauthorized access or disclosure. However, no method of electronic storage is 100% secure.
+
+  ### Your Rights
+  You have the right to request access to, modification, or deletion of your personal data. Please contact us if you have any concerns about your data privacy.
+
+  For more details, email am400718@gmail.com.
+`;

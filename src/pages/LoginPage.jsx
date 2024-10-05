@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "../components/Card";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -8,13 +8,26 @@ import axios from "axios";
 import { database } from "../firebase";
 import { ref, set } from "firebase/database";
 import { useAuth } from "../components/AuthContext"; // Import Auth Context
+import MarkdownModal from "../components/Modal";
+import { termsContent, privacyContent } from "../constants";
+import { brainwaveSymbol } from "../assets/index";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { login } = useAuth(); // Get login function from Auth Context
+  const { login, user } = useAuth(); // Get login function from Auth Context
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  // Add state variables for the modals
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+
+  // Redirect if the user is already logged in
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
 
   const loginWithGoogle = useGoogleLogin({
     onSuccess: (codeResponse) => {
@@ -90,7 +103,11 @@ const LoginPage = () => {
           <div className="text-center mb-8">
             <Link to="/" className="inline-block">
               <div className="flex items-center justify-center space-x-2">
-                <div className="w-8 h-8 bg-[#d1e5e4] rounded-full"></div>
+                <img
+                  src={brainwaveSymbol}
+                  alt="logo"
+                  className="w-8 h-8 rounded-full"
+                />
                 <span className="text-2xl font-bold text-purple-600">
                   MindSpace
                 </span>
@@ -129,20 +146,42 @@ const LoginPage = () => {
               </button>
             </div>
           )}
+          {/* Your login and profile code will go here */}
           <p className="mt-6 text-center text-sm text-gray-600">
             By signing in, you agree to our{" "}
-            <Link to="/terms" className="text-purple-600 hover:underline">
+            <button
+              onClick={() => setIsTermsOpen(true)}
+              className="text-purple-600 hover:underline"
+            >
               Terms of Service
-            </Link>{" "}
+            </button>{" "}
             and{" "}
-            <Link to="/privacy" className="text-purple-600 hover:underline">
+            <button
+              onClick={() => setIsPrivacyOpen(true)}
+              className="text-purple-600 hover:underline"
+            >
               Privacy Policy
-            </Link>
+            </button>
             .
           </p>
         </Card>
       </div>
       <Footer />
+      {/* Terms Modal */}
+      <MarkdownModal
+        title="Terms and Conditions"
+        content={termsContent}
+        isOpen={isTermsOpen}
+        onClose={() => setIsTermsOpen(false)}
+      />
+
+      {/* Privacy Modal */}
+      <MarkdownModal
+        title="Privacy Policy"
+        content={privacyContent}
+        isOpen={isPrivacyOpen}
+        onClose={() => setIsPrivacyOpen(false)}
+      />
     </div>
   );
 };

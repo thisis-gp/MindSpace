@@ -7,12 +7,14 @@ import Navbar from "../components/Navbar";
 import {
   Mic,
   Send,
-  Volume2,
   Menu,
   PlusCircle,
   MessageCircle,
   Clock,
   Settings,
+  Square,
+  Play,
+  Trash2,
 } from "lucide-react";
 import { database } from "../firebase";
 import { ref, get } from "firebase/database";
@@ -28,10 +30,15 @@ const suggestedPrompts = [
 const Dashboard = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const [isListening, setIsListening] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
   const [hasSubmittedPrompt, setHasSubmittedPrompt] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [audioUrl, setAudioUrl] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
   const messagesEndRef = useRef(null);
+  const mediaRecorderRef = useRef(null);
+  const audioChunksRef = useRef([]);
+  const audioRef = useRef(new Audio());
   const userId = localStorage.getItem("userId");
 
   // Scroll to the bottom of the messages list whenever messages change
@@ -66,14 +73,16 @@ const Dashboard = () => {
 
   const handleSend = async () => {
     if (input.trim()) {
+      const currentInput = input; // Store input to avoid closure issues
       // Add user's message to the chat
-      setMessages([...messages, { text: input, sender: "user" }]);
+      setMessages([...messages, { text: currentInput, sender: "user" }]);
+
       setInput("");
       setHasSubmittedPrompt(true);
 
       try {
         // Send user input to FastAPI and get the response as JSON
-        const aiResponseJson = await sendChatMessage(userId, input);
+        const aiResponseJson = await sendChatMessage(userId, currentInput);
 
         // Check for the response text in the JSON object
         if (aiResponseJson && aiResponseJson.response) {
@@ -99,28 +108,123 @@ const Dashboard = () => {
     }
   };
 
+  const handleSuggestedPrompt = async (prompt) => {
+    setInput(prompt); // Set the input to the selected prompt
+    await handleSend(); // Immediately send the prompt
+  };
+
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorderRef.current = new MediaRecorder(stream);
+      audioChunksRef.current = [];
+
+      mediaRecorderRef.current.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          audioChunksRef.current.push(event.data);
+        }
+      };
+
+      mediaRecorderRef.current.onstop = () => {
+        const audioBlob = new Blob(audioChunksRef.current, {
+          type: "audio/wav",
+        });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        setAudioUrl(audioUrl);
+      };
+
+      mediaRecorderRef.current.start();
+      setIsRecording(true);
+    } catch (error) {
+      console.error("Error starting recording:", error);
+    }
+  };
+
+  const stopRecording = () => {
+    if (
+      mediaRecorderRef.current &&
+      mediaRecorderRef.current.state === "recording"
+    ) {
+      mediaRecorderRef.current.stop();
+      setIsRecording(false);
+    }
+  };
+
+  const playAudio = () => {
+    if (audioUrl) {
+      audioRef.current.src = audioUrl;
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
+  };
+
+  const pauseAudio = () => {
+    audioRef.current.pause();
+    setIsPlaying(false);
+  };
+
+  const deleteAudio = () => {
+    setAudioUrl(null);
+    audioRef.current.src = "";
+  };
+
+  const sendAudio = async () => {
+    if (audioUrl) {
+      try {
+        const response = await fetch(audioUrl);
+        const audioBlob = await response.blob();
+        setMessages((msgs) => [
+          ...msgs,
+          { text: "Audio message sent", sender: "user" },
+        ]);
+        const aiResponseJson = await sendAudioMessage(userId, audioBlob);
+        if (aiResponseJson && aiResponseJson.response) {
+          setMessages((msgs) => [
+            ...msgs,
+            { text: aiResponseJson.response, sender: "ai" },
+          ]);
+        } else {
+          setMessages((msgs) => [
+            ...msgs,
+            { text: "Error processing audio message.", sender: "ai" },
+          ]);
+        }
+      } catch (error) {
+        console.error("Error sending audio message:", error);
+        setMessages((msgs) => [
+          ...msgs,
+          { text: "Error processing audio message.", sender: "ai" },
+        ]);
+      }
+      deleteAudio();
+    }
+  };
+
   const handleVoiceInput = () => {
-    setIsListening(!isListening);
-    // Implement voice input logic here
+    if (isRecording) {
+      stopRecording();
+    } else {
+      startRecording();
+    }
   };
 
   return (
-    <div className="flex h-screen bg-gray-50">
-      <aside className="w-16 bg-white border-r border-gray-200">
-        <div className="flex flex-col items-center py-4">
-          <Button variant="ghost" className="mb-4">
+    <div className="flex flex-col h-screen bg-gray-50 md:flex-row">
+      <aside className="w-full md:w-16 bg-white border-b md:border-r border-gray-200">
+        <div className="flex flex-row md:flex-col items-center justify-between md:justify-start py-2 md:py-4 px-4 md:px-0">
+          <Button variant="ghost" className="md:mb-4">
             <Menu className="h-6 w-6" />
           </Button>
-          <Button variant="ghost" className="mb-4">
+          <Button variant="ghost" className="md:mb-4">
             <PlusCircle className="h-6 w-6" />
           </Button>
-          <Button variant="ghost" className="mb-4">
+          <Button variant="ghost" className="md:mb-4">
             <MessageCircle className="h-6 w-6" />
           </Button>
-          <Button variant="ghost" className="mb-4">
+          <Button variant="ghost" className="md:mb-4">
             <Clock className="h-6 w-6" />
           </Button>
-          <Button variant="ghost" className="mt-auto">
+          <Button variant="ghost" className="md:mt-auto">
             <Settings className="h-6 w-6" />
           </Button>
         </div>
@@ -138,14 +242,13 @@ const Dashboard = () => {
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-white">
           <div className="max-w-3xl mx-auto px-4 py-8">
             {!hasSubmittedPrompt && messages.length === 0 && (
-              <div className="grid grid-cols-2 gap-4 mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                 {suggestedPrompts.map((prompt, index) => (
                   <Card
                     key={index}
                     className="p-4 hover:bg-gray-50 cursor-pointer transition-colors duration-200"
                     onClick={() => {
-                      setInput(prompt);
-                      handleSend();
+                      handleSuggestedPrompt(prompt);
                     }}
                   >
                     <p className="text-sm text-gray-700">{prompt}</p>
@@ -162,7 +265,7 @@ const Dashboard = () => {
                   }`}
                 >
                   <div
-                    className={`rounded-lg px-4 py-2 max-w-sm ${
+                    className={`rounded-lg px-4 py-2 max-w-[80%] ${
                       message.sender === "user"
                         ? "bg-blue-500 text-white"
                         : "bg-gray-100 text-gray-800"
@@ -181,26 +284,67 @@ const Dashboard = () => {
           </div>
         </main>
         <footer className="bg-white border-t border-gray-200 p-4">
-          <div className="max-w-3xl mx-auto flex items-center space-x-4">
-            <Input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Enter a prompt here"
-              className="flex-1"
-              onKeyPress={(e) => e.key === "Enter" && handleSend()}
-            />
-            <Button
-              onClick={handleSend}
-              className="bg-blue-500 hover:bg-blue-600 text-white"
-            >
-              <Send className="h-5 w-5" />
-            </Button>
-            <Button onClick={handleVoiceInput} variant="outline">
-              <Mic className={`h-5 w-5 ${isListening ? "text-red-500" : ""}`} />
-            </Button>
-            <Button variant="outline">
-              <Volume2 className="h-5 w-5" />
-            </Button>
+          <div className="max-w-3xl mx-auto flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
+            {audioUrl ? (
+              <div className="flex items-center space-x-2 w-full">
+                <Button
+                  onClick={isPlaying ? pauseAudio : playAudio}
+                  variant="outline"
+                >
+                  {isPlaying ? (
+                    <Square className="h-5 w-5" />
+                  ) : (
+                    <Play className="h-5 w-5" />
+                  )}
+                </Button>
+                <div className="flex-grow h-2 bg-gray-200 rounded-full">
+                  <div
+                    className="h-2 bg-blue-500 rounded-full"
+                    style={{
+                      width: `${
+                        (audioRef.current.currentTime /
+                          audioRef.current.duration) *
+                          100 || 0
+                      }%`,
+                    }}
+                  ></div>
+                </div>
+                <Button onClick={deleteAudio} variant="outline">
+                  <Trash2 className="h-5 w-5 text-red-500" />
+                </Button>
+                <Button
+                  onClick={sendAudio}
+                  className="bg-blue-500 hover:bg-blue-600 text-white"
+                >
+                  <Send className="h-5 w-5" />
+                </Button>
+              </div>
+            ) : (
+              <>
+                <Input
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Enter a prompt here"
+                  className="w-full md:flex-1"
+                  onKeyPress={(e) => e.key === "Enter" && handleSend()}
+                />
+                <div className="flex space-x-2">
+                  <Button
+                    onClick={handleSend}
+                    className="bg-blue-500 hover:bg-blue-600 text-white"
+                  >
+                    <Send className="h-5 w-5" />
+                  </Button>
+                  <Button onClick={handleVoiceInput} variant="outline">
+                    {isRecording ? (
+                      <Square className="h-5 w-5 text-red-500" />
+                    ) : (
+                      <Mic className="h-5 w-5" />
+                    )}
+                  </Button>
+                </div>
+              </>
+            )}
           </div>
         </footer>
       </div>

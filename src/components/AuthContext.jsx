@@ -1,32 +1,33 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
-// Create an AuthContext
+// Create the context
 const AuthContext = createContext();
 
-// Custom hook to use the AuthContext
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+// Custom hook to access auth context
+export const useAuth = () => useContext(AuthContext);
 
-// AuthProvider component to wrap your app
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // User state
+  const [user, setUser] = useState(null);
 
+  // Check if user is already authenticated from localStorage
   useEffect(() => {
-    const storedUser = localStorage.getItem("userId");
-    if (storedUser) {
-      setUser(storedUser); // Set user state from local storage if available
+    const storedUserId = localStorage.getItem("userId");
+    if (storedUserId) {
+      // Set the user if they are stored in localStorage
+      setUser({ id: storedUserId });
     }
   }, []);
 
+  // Login function
   const login = (userData) => {
-    setUser(userData.id); // Set user state
-    localStorage.setItem("userId", userData.id); // Store user ID in local storage
+    setUser(userData);
+    localStorage.setItem("userId", userData.id);
   };
 
+  // Logout function
   const logout = () => {
-    setUser(null); // Clear user state
-    localStorage.removeItem("userId"); // Remove user ID from local storage
+    setUser(null);
+    localStorage.removeItem("userId");
   };
 
   return (

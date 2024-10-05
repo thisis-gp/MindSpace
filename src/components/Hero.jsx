@@ -8,9 +8,23 @@ import { useRef } from "react";
 import Generating from "./Generating";
 import Notification from "./Notification";
 import CompanyLogos from "./CompanyLogos";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
 const Hero = () => {
   const parallaxRef = useRef(null);
+  const navigate = useNavigate();
+  const { user } = useAuth(); // Get user state from Auth Context
+
+  const handleGetStarted = () => {
+    if (user) {
+      // If the user is already logged in, redirect to the dashboard
+      navigate("/dashboard");
+    } else {
+      // If the user is not logged in, redirect to the login page
+      navigate("/login");
+    }
+  };
 
   return (
     <Section
@@ -39,12 +53,14 @@ const Hero = () => {
             To live your life to the fullest, we're continuing to find ways to
             prevent mental health problems.
           </p>
-          <Button href="/login">Get started</Button>
+          <Button href="/login" onClick={handleGetStarted}>
+            Get started
+          </Button>
         </div>
         <div className="relative max-w-[23rem] mx-auto md:max-w-5xl xl:mb-24">
           <div className="relative z-1 p-0.5 rounded-2xl bg-conic-gradient">
             <div className="relative bg-[#704fe6] rounded-[1rem]">
-              <div className="h-[1.4rem] bg-[#dec8fe] rounded-t-[0.9rem]" />
+              <div className="h-[1rem] bg-[#dec8fe] rounded-t-[0.9rem]" />
 
               <div className="aspect-[33/40] rounded-b-[0.9rem] overflow-hidden md:aspect-[688/490] lg:aspect-[1024/490]">
                 <img

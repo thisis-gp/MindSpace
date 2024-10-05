@@ -1,8 +1,23 @@
 import { check } from "../assets";
 import { pricing } from "../constants";
 import Button from "./Button";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
 const PricingList = () => {
+  const navigate = useNavigate();
+  const { user } = useAuth(); // Get user state from Auth Context
+
+  const handleGetStarted = () => {
+    if (user) {
+      // If the user is already logged in, redirect to the dashboard
+      navigate("/dashboard");
+    } else {
+      // If the user is not logged in, redirect to the login page
+      navigate("/login");
+    }
+  };
+
   return (
     <div className="flex gap-[1rem] max-lg:flex-wrap">
       {pricing.map((item) => (
@@ -29,7 +44,8 @@ const PricingList = () => {
 
           <Button
             className="w-full mb-6"
-            href={item.price ? "/pricing" : "mailto:am400718@gmail.com"}
+            onClick={handleGetStarted}
+            href={item.price ? "/login" : "mailto:am400718@gmail.com"}
           >
             {item.price ? "Get started" : "Contact us"}
           </Button>
