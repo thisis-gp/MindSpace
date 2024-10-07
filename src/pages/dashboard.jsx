@@ -53,6 +53,33 @@ const Dashboard = () => {
     }
   }, [userId]);
 
+  // UseEffect to handle exit
+  useEffect(() => {
+    const handleBeforeUnload = async (event) => {
+      await sendExitMessage(); // Send exit message to backend
+      // Optionally, show a confirmation dialog (not supported in all browsers)
+      event.preventDefault();
+      event.returnValue = "";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      sendExitMessage(); // Send exit message on component unmount
+    };
+  }, []);
+
+  const sendExitMessage = async () => {
+    try {
+      // Send exit message to the backend
+      await sendChatMessage(userId, "exit");
+      console.log("Exit message sent to backend.");
+    } catch (error) {
+      console.error("Error sending exit message:", error);
+    }
+  };
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -91,6 +118,27 @@ const Dashboard = () => {
             ...msgs,
             { text: aiResponseJson.response, sender: "ai" },
           ]);
+          // If there's audio, create an audio URL and add it to the messages
+          if (aiResponseJson.audio) {
+            const audioBlob = new Blob(
+              [
+                new Uint8Array(
+                  atob(aiResponseJson.audio)
+                    .split("")
+                    .map((c) => c.charCodeAt(0))
+                ),
+              ],
+              { type: "audio/wav" }
+            );
+            const audioUrl = URL.createObjectURL(audioBlob);
+            setMessages((msgs) => [
+              ...msgs,
+              {
+                sender: "ai",
+                audioUrl: audioUrl,
+              },
+            ]);
+          }
         } else {
           setMessages((msgs) => [
             ...msgs,
@@ -153,6 +201,7 @@ const Dashboard = () => {
   const playAudio = () => {
     if (audioUrl) {
       audioRef.current.src = audioUrl;
+      audioRef.current.playbackRate = 1.25;
       audioRef.current.play();
       setIsPlaying(true);
     }
@@ -275,6 +324,14 @@ const Dashboard = () => {
                       <ReactMarkdown>{message.text}</ReactMarkdown>
                     ) : (
                       message.text
+                    )}
+                    {message.audioUrl && (
+                      <audio
+                        controls
+                        src={message.audioUrl}
+                        ref={(el) => el && (el.playbackRate = 1.25)}
+                        autoPlay
+                      ></audio>
                     )}
                   </div>
                 </div>

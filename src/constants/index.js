@@ -26,6 +26,7 @@ import {
   telegram,
   twitter,
   yourlogo,
+  tycl,
 } from "../assets";
 
 export const navigation = [
@@ -67,7 +68,7 @@ export const heroIcons = [homeSmile, file02, searchMd, plusSquare];
 
 export const notificationImages = [notification4, notification3, notification2];
 
-export const companyLogos = [yourlogo, yourlogo, yourlogo, yourlogo, yourlogo];
+export const companyLogos = [yourlogo, tycl, yourlogo, tycl, yourlogo];
 
 export const brainwaveServices = [
   "Photo generating",
@@ -143,7 +144,7 @@ export const pricing = [
     id: "0",
     title: "Student",
     description: "Basic AI support, emotional health tracking",
-    price: "0",
+    price: "Free",
     features: [
       "AI-powered emotional support",
       "Mood tracking and journaling",
@@ -154,7 +155,7 @@ export const pricing = [
     id: "1",
     title: "Premium",
     description: "Advanced support, personalized guidance",
-    price: "9.99",
+    price: "499",
     features: [
       "Personalized emotional health insights",
       "Access to premium resources",

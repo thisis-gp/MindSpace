@@ -32,13 +32,17 @@ const PricingList = () => {
           </p>
 
           <div className="flex items-center h-[5.5rem] mb-6">
-            {item.price && (
+            {item.price && item.price !== "Free" ? ( // Check if item.price is not null and not "free"
               <>
-                <div className="h3">$</div>
+                <div className="h3">₹</div>
                 <div className="text-[5.5rem] leading-none font-bold text-n-1">
                   {item.price}
                 </div>
               </>
+            ) : (
+              <div className="text-[5.5rem] leading-none font-bold text-n-1">
+                {item.price === "Free" ? "Free" : null}
+              </div>
             )}
           </div>
 

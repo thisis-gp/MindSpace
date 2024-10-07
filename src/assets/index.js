@@ -9,6 +9,7 @@ import grid from "./grid.png";
 import check2 from "./check-02.svg";
 import loading1 from "./loading-01.svg";
 import yourlogo from "./yourlogo.svg";
+import tycl from "./tycl.png";
 import homeSmile from "./home-smile.svg";
 import file02 from "./file-02.svg";
 import searchMd from "./search-md.svg";
@@ -22,8 +23,9 @@ import loading from "./loading.png";
 import background from "./background.jpg";
 
 import curve from "./hero/curve.png";
-import robot from "./hero/robot.png";
+import robot from "./hero/robot.lottie";
 import Designer from "./hero/Designer.jpg";
+import backgroundImg from "./hero/backgroundImg.png";
 
 import service1 from "./services/service-1.png";
 import service2 from "./services/service-2.png";
@@ -77,6 +79,7 @@ export {
   smallSphere,
   grid,
   yourlogo,
+  tycl,
   homeSmile,
   file02,
   searchMd,
@@ -91,6 +94,7 @@ export {
   curve,
   robot,
   Designer,
+  backgroundImg,
   service1,
   service2,
   service3,

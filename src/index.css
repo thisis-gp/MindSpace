@@ -85,3 +85,14 @@
 .-rotate-360 {
   @apply rotate-[-360deg];
 }
+
+.bg-image {
+  background-image: url('./assets/hero/backgroundImg.png');
+  /* Replace with your image path */
+  background-size: cover;
+  /* Ensure the image covers the entire element */
+  background-position: center;
+  /* Center the image */
+  background-repeat: no-repeat;
+  /* Prevent image repetition */
+}

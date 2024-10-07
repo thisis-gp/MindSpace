@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  assetsInclude: ["**/*.lottie"],
   define: {
     // env variable from .env file
     "process.env.GOOGLE_CLIENT_ID": JSON.stringify(

@@ -1,4 +1,4 @@
-import { curve, Designer, robot } from "../assets";
+import { curve, Designer, robot, backgroundImg } from "../assets";
 import Button from "./Button";
 import Section from "./Section";
 import { BackgroundCircles, BottomLine, Gradient } from "./design/Hero";
@@ -10,6 +10,7 @@ import Notification from "./Notification";
 import CompanyLogos from "./CompanyLogos";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 const Hero = () => {
   const parallaxRef = useRef(null);
@@ -59,17 +60,11 @@ const Hero = () => {
         </div>
         <div className="relative max-w-[23rem] mx-auto md:max-w-5xl xl:mb-24">
           <div className="relative z-1 p-0.5 rounded-2xl bg-conic-gradient">
-            <div className="relative bg-[#704fe6] rounded-[1rem]">
-              <div className="h-[1rem] bg-[#dec8fe] rounded-t-[0.9rem]" />
+            <div className="relative bg-image rounded-[1rem]">
+              <div className="h-[1rem] bg-[#fcdeb8] rounded-t-[0.9rem]" />
 
               <div className="aspect-[33/40] rounded-b-[0.9rem] overflow-hidden md:aspect-[688/490] lg:aspect-[1024/490]">
-                <img
-                  src={robot}
-                  className="w-full scale-[1] translate-y-[15%] md:scale-[1] md:-translate-y-[15%] lg:-translate-y-[40%]"
-                  width={1024}
-                  height={490}
-                  alt="AI"
-                />
+                <DotLottieReact src={robot} loop autoplay />
 
                 <Generating className="absolute left-4 right-4 bottom-5 md:left-1/2 md:right-auto md:bottom-8 md:w-[31rem] md:-translate-x-1/2" />
 
