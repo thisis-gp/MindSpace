@@ -73,7 +73,7 @@ const Dashboard = () => {
   const sendExitMessage = async () => {
     try {
       // Send exit message to the backend
-      await sendChatMessage(userId, "exit");
+      await sendChatMessage(userId, "generate report");
       console.log("Exit message sent to backend.");
     } catch (error) {
       console.error("Error sending exit message:", error);
