@@ -119,26 +119,26 @@ const Dashboard = () => {
             { text: aiResponseJson.response, sender: "ai" },
           ]);
           // If there's audio, create an audio URL and add it to the messages
-          if (aiResponseJson.audio) {
-            const audioBlob = new Blob(
-              [
-                new Uint8Array(
-                  atob(aiResponseJson.audio)
-                    .split("")
-                    .map((c) => c.charCodeAt(0))
-                ),
-              ],
-              { type: "audio/wav" }
-            );
-            const audioUrl = URL.createObjectURL(audioBlob);
-            setMessages((msgs) => [
-              ...msgs,
-              {
-                sender: "ai",
-                audioUrl: audioUrl,
-              },
-            ]);
-          }
+          // if (aiResponseJson.audio) {
+          //   const audioBlob = new Blob(
+          //     [
+          //       new Uint8Array(
+          //         atob(aiResponseJson.audio)
+          //           .split("")
+          //           .map((c) => c.charCodeAt(0))
+          //       ),
+          //     ],
+          //     { type: "audio/wav" }
+          //   );
+          //   const audioUrl = URL.createObjectURL(audioBlob);
+          //   setMessages((msgs) => [
+          //     ...msgs,
+          //     {
+          //       sender: "ai",
+          //       audioUrl: audioUrl,
+          //     },
+          //   ]);
+          // }
         } else {
           setMessages((msgs) => [
             ...msgs,
