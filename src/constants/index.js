@@ -68,7 +68,7 @@ export const heroIcons = [homeSmile, file02, searchMd, plusSquare];
 
 export const notificationImages = [notification4, notification3, notification2];
 
-export const companyLogos = [yourlogo, tycl, yourlogo, tycl, yourlogo];
+export const companyLogos = [tycl];
 
 export const brainwaveServices = [
   "Photo generating",
@@ -97,15 +97,15 @@ export const roadmap = [
   {
     id: "1",
     title: "Mood Tracking",
-    text: "Introducing mood tracking functionality to allow users to track their emotional states over time.",
-    date: "June 2023",
-    status: "progress",
+    text: "Planned: let users track their emotional states over time. Not built yet.",
+    date: "Planned",
+    status: "planned",
     imageUrl: roadmap2,
   },
   {
     id: "2",
     title: "Personalized Guidance",
-    text: "Providing students with personalized mental health guidance based on their interactions and mood.",
+    text: "Providing students with personalized mental health guidance based on their interactions.",
     date: "August 2023",
     status: "done",
     imageUrl: roadmap3,
@@ -113,9 +113,9 @@ export const roadmap = [
   {
     id: "3",
     title: "Resource Integration",
-    text: "Integrating with external mental health resources, offering links to professional help and additional reading.",
-    date: "November 2023",
-    status: "progress",
+    text: "Planned: links to external mental health resources, professional help and further reading.",
+    date: "Planned",
+    status: "planned",
     imageUrl: roadmap4,
   },
 ];
@@ -142,35 +142,12 @@ export const collabContent = [
 export const pricing = [
   {
     id: "0",
-    title: "Student",
-    description: "Basic AI support, emotional health tracking",
+    title: "Free",
+    description: "MindSpace is a free student project",
     price: "Free",
     features: [
-      "AI-powered emotional support",
-      "Mood tracking and journaling",
-      "Access to basic mental health resources",
-    ],
-  },
-  {
-    id: "1",
-    title: "Premium",
-    description: "Advanced support, personalized guidance",
-    price: "499",
-    features: [
-      "Personalized emotional health insights",
-      "Access to premium resources",
-      "Priority support from mental health experts",
-    ],
-  },
-  {
-    id: "2",
-    title: "Institutional",
-    description: "Custom AI integration, advanced analytics",
-    price: null,
-    features: [
-      "Custom AI chatbot for institutions",
-      "Advanced emotional health analytics for staff",
-      "Tailored mental health resources",
+      "AI-powered emotional support chat",
+      "Not a substitute for professional help",
     ],
   },
 ];
@@ -187,8 +164,8 @@ export const benefits = [
   },
   {
     id: "2",
-    title: "Track Your Emotions",
-    text: "Track your emotions over time and gain insights into your mental health.",
+    title: "Talk Through Your Emotions",
+    text: "Put your feelings into words in a private, non-judgmental conversation.",
     backgroundUrl: "./src/assets/benefits/card-5.svg",
     iconUrl: benefitIcon1,
     imageUrl: benefitImage2,
@@ -259,7 +236,7 @@ export const privacyContent = `
 
   ### Information We Collect
   1. **Personal Data**: We collect personal data such as your name, email, and Google account information when you sign in.
-  2. **Usage Data**: We collect data on your usage of the MindSpace platform, such as interactions with our AI services and mood tracking information.
+  2. **Usage Data**: We collect data on your usage of the MindSpace platform, such as interactions with our AI services.
   
   ### How We Use Your Data
   - **Personalization**: We use your data to personalize the AI responses and to improve your emotional support experience.

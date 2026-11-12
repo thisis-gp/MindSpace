@@ -6,7 +6,7 @@
 
 ![MindSpace Banner](./src/assets/brainwave.png) <!-- Add your banner image path -->
 
-An AI-powered mental health companion featuring empathetic conversations, mood tracking, and therapeutic resources. Built with modern web technologies for seamless user experience.
+An AI-powered mental health companion featuring empathetic conversations. Mood tracking and resource links are planned, not built yet. Built with modern web technologies for seamless user experience.
 
 ## Key Features ✨
 
@@ -28,6 +28,12 @@ An AI-powered mental health companion featuring empathetic conversations, mood t
 
 **Animation**  
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=flat&logo=framer&logoColor=white)](https://www.framer.com/motion/)
+
+## Note
+
+MindSpace is an AI companion and not a substitute for professional help. In India, call Tele-MANAS on 14416 (free, 24x7) or 112 in an emergency.
+
+Best Intervention Award, TYCL Mental Health Exhibition 2024.
 
 ## Live Demo 🚀
 

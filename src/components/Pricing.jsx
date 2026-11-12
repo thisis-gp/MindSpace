@@ -29,7 +29,7 @@ const Pricing = () => {
 
         <Heading
           tag="Get started with MindSpace"
-          title="Pay once, use forever"
+          title="Free to use"
         />
 
         <div className="relative">

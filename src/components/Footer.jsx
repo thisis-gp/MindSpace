@@ -23,6 +23,10 @@ const Footer = () => {
           ))}
         </ul>
       </div>
+      <p className="container mt-6 text-xs text-n-4 text-center">
+        MindSpace is an AI companion and not a substitute for professional help.
+        In India, call Tele-MANAS on 14416 (free, 24x7) or 112 in an emergency.
+      </p>
     </Section>
   );
 };
